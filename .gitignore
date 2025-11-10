@@ -1,0 +1,36 @@
+# Hugo-spezifische Dateien
+/ragow-hugo/public/
+/ragow-hugo/resources/_gen/
+/ragow-hugo/assets/jsconfig.json
+/ragow-hugo/hugo_stats.json
+/ragow-hugo/.hugo_build.lock
+
+# Hugo-Binärdateien
+hugo.exe
+hugo.darwin
+hugo.linux
+
+# Temporäre Dateien
+.DS_Store
+*.swp
+*.swo
+*~
+*.log
+
+# Node-Module (falls Sie npm für Themes oder Tools verwenden)
+node_modules/
+
+# IDE-spezifische Dateien
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Betriebssystem-spezifische Dateien
+Thumbs.db
+.directory
+
+# Lokale Umgebungsvariablen
+.env
+.env.*
+!.env.example
