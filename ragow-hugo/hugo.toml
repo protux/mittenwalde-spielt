@@ -1,4 +1,4 @@
-baseURL = 'https://ragow.net'
+baseURL = 'https://meeple.nischwan.de'
 languageCode = 'de-de'
 title = 'Brettspielgruppe Ragow'
 theme = 'hugo-scroll'
