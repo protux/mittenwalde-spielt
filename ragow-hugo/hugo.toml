@@ -1,6 +1,6 @@
-baseURL = 'https://meeple.nischwan.de'
+baseURL = 'https://zum-lachenden-meeple.de/'
 languageCode = 'de-de'
-title = 'Brettspielgruppe Ragow'
+title = 'zum lachenden Meeple'
 theme = 'hugo-scroll'
 
 # This is a "one page"-website, so we do not need these kinds of pages...
