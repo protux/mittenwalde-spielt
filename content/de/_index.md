@@ -9,8 +9,8 @@ header_use_video: false
 header_logo: "images/mascot_header.png"
 #
 # Headers are safeHTML, you can use HTML tags such as b,i,u,br
-header_headline: "zum lachenden Meeple"
-header_subheadline: "Brettspielgruppe"
+header_headline: "Spielegruppe Ragow"
+header_subheadline: "zum lachenden Meeple"
 
 # Add a 'Go back to top' item to the navigation menu
 # Title: name of navigation menu entry
