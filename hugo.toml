@@ -1,6 +1,6 @@
-baseURL = 'https://spielegruppe-ragow.de/'
+baseURL = 'https://mittenwalde-spielt.de/'
 languageCode = 'de-de'
-title = 'spielegruppe Ragow'
+title = 'Mittenwalde spielt!'
 theme = 'hugo-scroll'
 
 # This is a "one page"-website, so we do not need these kinds of pages...
@@ -31,7 +31,7 @@ defaultContentLanguage = "de"
     title = "Brettspielgruppe"
 
     # The "description" of your website. This is used in the meta data of your generated html.
-    description = "Informationsseite der Ragower Brettspielgruppe"
+    description = "Informationsseite der Mittenwalder Brettspielgruppe"
 
     # Show a menu of languages available
     language_menu = false
@@ -66,7 +66,7 @@ defaultContentLanguage = "de"
     showFooterLinks = false
 
     [params.meta]
-        keywords = "ragow, ragower Brettspielgruppe, Ragower Gesellschaftsspielegruppe, Ragower Brettspieltreff"
+        keywords = "mittenwalde, brusendorf, Brettspielgruppe Mittenwalde, Mittenwalde Gesellschaftsspielegruppe, Mittenwalde Brettspieltreff"
 
     #[[params.contacts]]
     #    label = "phone"

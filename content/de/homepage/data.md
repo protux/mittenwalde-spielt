@@ -3,12 +3,11 @@ title: "Daten"
 weight: 2
 header_menu: true
 ---
-**Wo?** Küstergasse 3, 15749 Ragow  
-**Wann?** Jeden Montag, 18–21 Uhr; **Achtung:** Erster Termin am **XX.01.2026**!  
+**Wo?** [Straße der Einheit 3, 15749 Mittenwalde OT Brusendorf](https://maps.app.goo.gl/fTJt3bQgbGjebwUN9)  
+**Wann?** ab dem 23.02.2026 jeden Montag, 18–21 Uhr
 **Was wird gespielt?** Alles, was mitgebracht wird!  
 **Wer ist eingeladen?** Alle – unabhängig von Alter, Geschlecht oder Herkunft.  
 **Was kann ich mitbringen?**
 - Gute Laune
 - Spaß am Spielen
-- Eine Kleinigkeit zum Knabbern
 - Wenn vorhanden: ein Spiel, das du mit uns spielen möchtest

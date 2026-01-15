@@ -1,2 +1,1 @@
-# ragow
-The home of ragow.net
+Home of Mittenwalde-spielt.de!
