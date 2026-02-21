@@ -1,0 +1,116 @@
+<style>
+  /*
+  .announcement-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--section-dark-bg-color);
+    border-bottom: 1px solid rgba(255, 255, 255, .15);
+  }
+
+  .announcement {
+    margin: 0;
+    color: #fff;
+  }*/
+  :root {
+    --announcement-height: 3.25rem;
+  }
+
+  /* ggf. anpassen */
+
+  .announcement-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100000;
+    /* über Theme-Menüs */
+  }
+
+  /* Hintergrund/Border am eigentlichen Banner lassen */
+  .announcement {
+    display: block;
+    background: var(--section-dark-bg-color);
+    color: #fff;
+    margin: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .15);
+  }
+
+  .announcement__content {
+    position: relative;
+    max-width: 70rem;
+    margin: 0 auto;
+    padding: .75rem 3rem .75rem 1rem;
+    line-height: 1.35;
+  }
+
+  .announcement__content a {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  .announcement__content p {
+    margin: 0;
+  }
+
+  .announcement__content img {
+    height: 1em;
+    width: auto;
+    vertical-align: -0.15em;
+    margin-right: 0.5rem;
+  }
+
+  .announcement__close {
+    list-style: none;
+    cursor: pointer;
+    position: absolute;
+    top: .5rem;
+    right: .75rem;
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+    border-radius: .5rem;
+    background: rgba(255, 255, 255, .12);
+  }
+
+  .announcement__close::-webkit-details-marker {
+    display: none;
+  }
+
+  .announcement:not([open]) {
+    display: none;
+  }
+
+  .fixed-nav {
+    top: 40px;
+  }
+
+  @media only screen and (max-width: 1130px) {
+    .fixed-nav {
+      top: 0;
+    }
+  }
+
+  body:has(.announcement[open]) {
+    padding-top: var(--announcement-height);
+  }
+
+  body:not(:has(.announcement[open])) {
+    padding-top: 0;
+  }
+
+  body:has(.announcement[open]) .fixed-nav {
+    top: calc(40px + var(--announcement-height));
+  }
+
+  @media only screen and (max-width: 1130px) {
+    body:has(.announcement[open]) .fixed-nav {
+      top: var(--announcement-height);
+    }
+  }
+
+  html {
+    scroll-padding-top: var(--announcement-height);
+  }
+</style>

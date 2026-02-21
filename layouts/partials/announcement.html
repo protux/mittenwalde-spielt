@@ -1,0 +1,22 @@
+{{- $homepageBundle := site.GetPage "/homepage" -}}
+{{- if not $homepageBundle -}}
+{{- /* no homepage bundle found */ -}}
+{{- else -}}
+{{- $homepageSections := $homepageBundle.Resources.ByType "page" -}}
+{{- $homepageSections = cond site.BuildDrafts $homepageSections (where $homepageSections "Draft" "==" false) -}}
+{{- $announcements := where $homepageSections "Params.announcement" "eq" true -}}
+
+{{- with index $announcements 0 -}}
+<div class="announcement-wrapper">
+  <details class="announcement" open>
+    <summary class="announcement__close" aria-label="Banner schließen">
+      <span aria-hidden="true">×</span>
+    </summary>
+
+    <div class="announcement__content">
+      {{ .Content }}
+    </div>
+  </details>
+</div>
+{{- end -}}
+{{- end -}}
