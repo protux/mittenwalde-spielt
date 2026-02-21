@@ -9,5 +9,5 @@ An folgenden Terminen findet voraussichtlich *kein* Spieleabend statt!
 
 - 23.03.2026
 - 06.04.2026 (Ostermontag)
-- 25.05.2026 (Pfingsmontag)
+- 25.05.2026 (Pfingstmontag)
 - 14.09.2026
