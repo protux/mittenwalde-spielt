@@ -108,7 +108,7 @@ def _replace_generated_block(full_text: str, generated_text: str) -> str:
 
 
 def main() -> None:
-    ics_file_path = Path("static/kalender.ics")
+    ics_file_path = Path("static/Mittenwalde-spielt.ics")
     skip_markdown_file_path = Path("content/de/homepage/skip.md")
     labels_file_path = Path("data/skip_labels.yml")
 

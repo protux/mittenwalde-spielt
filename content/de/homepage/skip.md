@@ -4,7 +4,8 @@ weight: 3
 header_menu: true
 ---
 Alle Termine findest du ganz unkompliziert in unserem Kalender:
-- [Kalender abonnieren](/kalender.ics)
+- {{< webcal "webcal://mittenwalde-spielt.de/Mittenwalde-spielt.ics" >}}Kalender für automatische Updates abonnieren{{< /webcal >}}
+- [Kalender herunterladen](/Mittenwalde-spielt.ics)
 
 An folgenden Terminen findet voraussichtlich *kein* Spieleabend statt!
 

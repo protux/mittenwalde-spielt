@@ -52,7 +52,7 @@ jobs:
             exit 1
           fi
 
-          mv "${temporary_ics_file_path}" static/kalender.ics
+          mv "${temporary_ics_file_path}" static/Mittenwalde-spielt.ics
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -72,12 +72,12 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [[ -z "$(git status --porcelain static/kalender.ics content/de/homepage/skip.md)" ]]; then
+          if [[ -z "$(git status --porcelain static/Mittenwalde-spielt.ics content/de/homepage/skip.md)" ]]; then
             echo "No changes."
             exit 0
           fi
 
-          git add static/kalender.ics content/de/homepage/skip.md
+          git add static/Mittenwalde-spielt.ics content/de/homepage/skip.md
           git -c user.name="github-actions[bot]" -c user.email="github-actions[bot]@users.noreply.github.com" \
-            commit -m "chore(calendar): sync kalender.ics"
+            commit -m "chore(calendar): sync Mittenwalde-spielt.ics"
           git push
