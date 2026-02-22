@@ -110,7 +110,7 @@ def _replace_generated_block(full_text: str, generated_text: str) -> str:
 def main() -> None:
     ics_file_path = Path("static/kalender.ics")
     skip_markdown_file_path = Path("content/de/homepage/skip.md")
-    labels_file_path = Path("data/skip_labels.yaml")
+    labels_file_path = Path("data/skip_labels.yml")
 
     calendar_text = ics_file_path.read_bytes()
     calendar = Calendar.from_ical(calendar_text)
