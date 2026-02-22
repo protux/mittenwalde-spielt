@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
+          token: ${{ secrets.CALENDAR_SYNC_PAT }}
       - name: Download calendar
         env:
           RADICALE_URL: ${{ secrets.RADICALE_URL }}
