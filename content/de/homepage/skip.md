@@ -11,4 +11,5 @@ An folgenden Terminen findet voraussichtlich *kein* Spieleabend statt!
 Änderungen in der Liste sind jederzeit möglich, am Besten regelmäßig reinschauen. :)
 
 <!-- BEGIN GENERATED: cancelled-dates -->
+- 23.03.2026
 <!-- END GENERATED: cancelled-dates -->
