@@ -1,0 +1,33 @@
+{
+    "extends": ["config:recommended"],
+    "timezone": "Europe/Berlin",
+    "schedule": ["every weekend"],
+    "labels": ["dependencies"],
+    "dependencyDashboard": true,
+  
+    "automerge": true,
+    "automergeType": "pr",
+    "platformAutomerge": true,
+  
+    "rebaseWhen": "behind-base-branch",
+  
+    "packageRules": [
+      {
+        "matchManagers": ["github-actions"],
+        "automerge": true
+      },
+      {
+        "matchManagers": ["pip_requirements"],
+        "automerge": true
+      }
+    ],
+  
+    "regexManagers": [
+      {
+        "fileMatch": ["^\\.github/workflows/hugo\\.yml$"],
+        "matchStrings": ["hugo-version:\\s*['\"](?<currentValue>[^'\"]+)['\"]"],
+        "depNameTemplate": "gohugoio/hugo",
+        "datasourceTemplate": "github-releases"
+      }
+    ]
+  }
