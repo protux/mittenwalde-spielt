@@ -1,0 +1,69 @@
+name: Sync calendar ICS
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */2 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "calendar-sync"
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download calendar
+        env:
+          RADICALE_URL: ${{ secrets.RADICALE_URL }}
+          RADICALE_USERNAME: ${{ secrets.RADICALE_USERNAME }}
+          RADICALE_PASSWORD: ${{ secrets.RADICALE_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          mkdir -p static
+
+          temporary_ics_file_path="$(mktemp)"
+
+          curl -fsS --location \
+            -u "${RADICALE_USERNAME}:${RADICALE_PASSWORD}" \
+            -H "Accept: text/calendar" \
+            "${RADICALE_URL}" \
+            -o "${temporary_ics_file_path}"
+
+          if [[ ! -s "${temporary_ics_file_path}" ]]; then
+            echo "Calendar download produced an empty file."
+            rm -f "${temporary_ics_file_path}"
+            exit 1
+          fi
+
+          if ! grep -q '^BEGIN:VCALENDAR' "${temporary_ics_file_path}"; then
+            echo "Downloaded file does not look like an ICS (missing BEGIN:VCALENDAR)."
+            rm -f "${temporary_ics_file_path}"
+            exit 1
+          fi
+
+          mv "${temporary_ics_file_path}" static/kalender.ics
+
+      - name: Commit and push if changed
+        run: |
+          set -euo pipefail
+
+          if [[ -z "$(git status --porcelain static/kalender.ics)" ]]; then
+            echo "No changes."
+            exit 0
+          fi
+
+          git add static/kalender.ics
+          git -c user.name="github-actions[bot]" -c user.email="github-actions[bot]@users.noreply.github.com" \
+            commit -m "chore(calendar): sync kalender.ics"
+          git push
