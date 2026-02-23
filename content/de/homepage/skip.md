@@ -13,6 +13,6 @@ An folgenden Terminen findet voraussichtlich *kein* Spieleabend statt!
 
 <!-- BEGIN GENERATED: cancelled-dates -->
 - 23.03.2026
-- 06.04.2026
-- 25.05.2026
+- 06.04.2026 (Ostermontag)
+- 25.05.2026 (Pfingstmontag)
 <!-- END GENERATED: cancelled-dates -->
