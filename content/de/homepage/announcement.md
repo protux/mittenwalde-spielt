@@ -1,7 +1,7 @@
 ---
 title: "Announcement"
-draft: true
+draft: false
 announcement: true
 detailed_page_homepage_content: false
 ---
-![GIF, das eine drehende Sirene zeigt](/images/alert.gif) Achtung! Der Termin am kommenden Montag (23.03.2026) fällt aus! Alle [Ausfalltermine findest du hier](/#ausfalltermine)!
+Aufgrund der ungeklärten Schlüssellage ist unklar, ob wir uns schon in der kommenden Woche wiedersehen. Kalender abonnieren und gespannt bleiben! Alternativ am Wochenende nochmal die Ausfalltermine auf der Website ansehen. Wir freuen uns auf euch! 🙌
