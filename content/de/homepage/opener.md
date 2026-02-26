@@ -2,7 +2,7 @@
 title: "Hallöchen und Willkommen!"
 header_menu_title: "Willkommen"
 navigation_menu_title: "Willkommen"
-weight: 1
+weight: 10
 header_menu: true
 ---
 

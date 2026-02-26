@@ -1,6 +1,6 @@
 ---
 title: "Ausfalltermine"
-weight: 3
+weight: 30
 header_menu: true
 ---
 Alle Termine findest du ganz unkompliziert in unserem Kalender:

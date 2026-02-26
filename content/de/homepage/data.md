@@ -1,6 +1,6 @@
 ---
 title: "Daten"
-weight: 2
+weight: 20
 header_menu: true
 ---
 **Wo?** [Straße der Einheit 3, 15749 Mittenwalde OT Brusendorf](https://maps.app.goo.gl/fTJt3bQgbGjebwUN9)  
