@@ -10,5 +10,6 @@ header_menu: true
 **Was kann ich mitbringen?**
 - Gute Laune
 - Spaß am Spielen
-- Wenn vorhanden: ein Spiel, das du mit uns spielen möchtest  
+- Wenn vorhanden: ein Spiel, das du mit uns spielen möchtest
+
 **Kostet das was?** Der Raum kostet grundsätzlich 4,80€ pro Stunde. Bei 3h Spielzeit sind das 14,40€. Wir möchten die Raummiete per freiwilligem Beitrag in selbstgewählter Höhe zusammenbringen. Spätestens ab dem 5. Termin wird eine Spendendose bereitstehen. Wir rechnen den Raum quartalsweise ab, sodass wir nur die Termine bezahlen, an denen wir den Raum auch tatsächlich genutzt haben. 
