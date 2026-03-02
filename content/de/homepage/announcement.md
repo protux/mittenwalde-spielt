@@ -4,4 +4,4 @@ draft: false
 announcement: true
 detailed_page_homepage_content: false
 ---
-Trotz der [ungeklärten Schlüssellage](#schlüsselsituation) sehen wir uns ab dem 09.03. wöchentlich. Heute (02.03.) fällt leider aus.
+Trotz der [ungeklärten Schlüssellage](#schlüsselsituation) sehen wir uns ab dem 09.03. wöchentlich.
