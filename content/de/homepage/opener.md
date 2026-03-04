@@ -6,7 +6,7 @@ weight: 10
 header_menu: true
 ---
 
-Jeden Montag, beginnend am 23.02.2026, findet um 18 Uhr im [Freizeithaus in Brusendorf](#informationen) eine Spielegruppe für Gesellschaftsspiele statt.
+Jeden Montag findet um 18 Uhr im [Freizeithaus in Brusendorf](#informationen) eine Spielegruppe für Gesellschaftsspiele statt.
 
 Gespielt wird alles – von Klassikern wie Carcassonne oder Agricola über Kartenspiele (Wizard, Spicy) und Deduktionsspiele (Der Widerstand, Feed the Kraken, BotC) bis hin zu Partyspielen (Just One, Herdentier) – es ist für alle etwas dabei!
 
