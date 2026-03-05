@@ -82,6 +82,21 @@ def _extract_cancelled_event_dates(component: object) -> Iterable[date]:
     return [cancelled_date] if cancelled_date else []
 
 
+def _extract_active_event_dates(component: object) -> Iterable[date]:
+    status = str(getattr(component, "get", lambda _: "")("status") or "").upper()
+    if status == "CANCELLED":
+        return []
+
+    recurrence_id = getattr(component, "get", lambda _: None)("recurrence-id")
+    dtstart = getattr(component, "get", lambda _: None)("dtstart")
+
+    recurrence_value = getattr(recurrence_id, "dt", None) if recurrence_id else None
+    dtstart_value = getattr(dtstart, "dt", None) if dtstart else None
+
+    active_date = _to_berlin_date(recurrence_value) or _to_berlin_date(dtstart_value)
+    return [active_date] if active_date else []
+
+
 def _render_markdown_list(entries: list[CancelledDateEntry]) -> str:
     if not entries:
         return "Aktuell sind keine Ausfalltermine geplant! 🥳\n"
@@ -107,11 +122,9 @@ def _replace_generated_block(full_text: str, generated_text: str) -> str:
     return before + "\n" + generated_text + after
 
 
-def main() -> None:
-    ics_file_path = Path("static/Mittenwalde-spielt.ics")
-    skip_markdown_file_path = Path("content/de/homepage/skip.md")
-    labels_file_path = Path("data/skip_labels.yml")
-
+def generate_cancelled_dates(
+    ics_file_path: Path, skip_markdown_file_path: Path, labels_file_path: Path
+) -> None:
     calendar_text = ics_file_path.read_bytes()
     calendar = Calendar.from_ical(calendar_text)
 
@@ -119,6 +132,7 @@ def main() -> None:
     labels_by_date = _load_labels(labels_file_path)
 
     cancelled_dates: set[date] = set()
+    dates_with_replacement_events: set[date] = set()
 
     for component in calendar.walk():
         if getattr(component, "name", "").upper() != "VEVENT":
@@ -130,7 +144,16 @@ def main() -> None:
         for cancelled_date in _extract_cancelled_event_dates(component):
             cancelled_dates.add(cancelled_date)
 
-    filtered_sorted_dates = sorted(d for d in cancelled_dates if d >= today_in_berlin)
+        for active_date in _extract_active_event_dates(component):
+            dates_with_replacement_events.add(active_date)
+
+    effective_cancelled_dates = {
+        cancelled_date
+        for cancelled_date in cancelled_dates
+        if cancelled_date >= today_in_berlin
+        and cancelled_date not in dates_with_replacement_events
+    }
+    filtered_sorted_dates = sorted(effective_cancelled_dates)
     entries = [
         CancelledDateEntry(
             cancelled_date=cancelled_date, label=labels_by_date.get(cancelled_date)
@@ -144,6 +167,18 @@ def main() -> None:
     updated_skip_text = _replace_generated_block(skip_text, generated_block_text)
 
     skip_markdown_file_path.write_text(updated_skip_text, encoding="utf-8")
+
+
+def main() -> None:
+    ics_file_path = Path("static/Mittenwalde-spielt.ics")
+    skip_markdown_file_path = Path("content/de/homepage/skip.md")
+    labels_file_path = Path("data/skip_labels.yml")
+
+    generate_cancelled_dates(
+        ics_file_path=ics_file_path,
+        skip_markdown_file_path=skip_markdown_file_path,
+        labels_file_path=labels_file_path,
+    )
 
 
 if __name__ == "__main__":

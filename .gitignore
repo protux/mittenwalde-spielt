@@ -10,6 +10,9 @@ hugo.exe
 hugo.darwin
 hugo.linux
 
+# Python Krams
+**/__pycache__/
+
 # Temporäre Dateien
 .DS_Store
 *.swp
