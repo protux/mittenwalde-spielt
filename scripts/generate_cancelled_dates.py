@@ -9,7 +9,6 @@ import yaml
 from icalendar import Calendar
 from zoneinfo import ZoneInfo
 
-
 BERLIN_TIMEZONE = ZoneInfo("Europe/Berlin")
 BEGIN_MARKER = "<!-- BEGIN GENERATED: cancelled-dates -->"
 END_MARKER = "<!-- END GENERATED: cancelled-dates -->"
@@ -97,6 +96,32 @@ def _extract_active_event_dates(component: object) -> Iterable[date]:
     return [active_date] if active_date else []
 
 
+def collect_effective_cancelled_dates(calendar: Calendar) -> list[date]:
+    cancelled_dates: set[date] = set()
+    dates_with_replacement_events: set[date] = set()
+
+    for component in calendar.walk():
+        if getattr(component, "name", "").upper() != "VEVENT":
+            continue
+
+        for cancelled_date in _extract_exdates(component):
+            cancelled_dates.add(cancelled_date)
+
+        for cancelled_date in _extract_cancelled_event_dates(component):
+            cancelled_dates.add(cancelled_date)
+
+        for active_date in _extract_active_event_dates(component):
+            dates_with_replacement_events.add(active_date)
+
+    effective_cancelled_dates = {
+        cancelled_date
+        for cancelled_date in cancelled_dates
+        if cancelled_date not in dates_with_replacement_events
+    }
+
+    return sorted(effective_cancelled_dates)
+
+
 def _render_markdown_list(entries: list[CancelledDateEntry]) -> str:
     if not entries:
         return "Aktuell sind keine Ausfalltermine geplant! 🥳\n"
@@ -131,29 +156,12 @@ def generate_cancelled_dates(
     today_in_berlin = datetime.now(BERLIN_TIMEZONE).date()
     labels_by_date = _load_labels(labels_file_path)
 
-    cancelled_dates: set[date] = set()
-    dates_with_replacement_events: set[date] = set()
-
-    for component in calendar.walk():
-        if getattr(component, "name", "").upper() != "VEVENT":
-            continue
-
-        for cancelled_date in _extract_exdates(component):
-            cancelled_dates.add(cancelled_date)
-
-        for cancelled_date in _extract_cancelled_event_dates(component):
-            cancelled_dates.add(cancelled_date)
-
-        for active_date in _extract_active_event_dates(component):
-            dates_with_replacement_events.add(active_date)
-
-    effective_cancelled_dates = {
+    effective_cancelled_dates = collect_effective_cancelled_dates(calendar)
+    filtered_sorted_dates = [
         cancelled_date
-        for cancelled_date in cancelled_dates
+        for cancelled_date in effective_cancelled_dates
         if cancelled_date >= today_in_berlin
-        and cancelled_date not in dates_with_replacement_events
-    }
-    filtered_sorted_dates = sorted(effective_cancelled_dates)
+    ]
     entries = [
         CancelledDateEntry(
             cancelled_date=cancelled_date, label=labels_by_date.get(cancelled_date)

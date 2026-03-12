@@ -4,12 +4,13 @@ from datetime import date
 from pathlib import Path
 from textwrap import dedent
 
-from icalendar import Event, vDDDTypes
+from icalendar import Calendar, Event, vDDDTypes
 
 from scripts.generate_cancelled_dates import (
     BEGIN_MARKER,
     END_MARKER,
     CancelledDateEntry,
+    collect_effective_cancelled_dates,
     _extract_active_event_dates,
     _extract_cancelled_event_dates,
     _extract_exdates,
@@ -39,6 +40,11 @@ def _build_basic_calendar(vevent_blocks: str) -> bytes:
     ]
     calendar_text = "\r\n".join(calendar_lines)
     return calendar_text.encode("utf-8")
+
+
+def _build_calendar(vevent_blocks: str) -> Calendar:
+    ics_bytes = _build_basic_calendar(vevent_blocks)
+    return Calendar.from_ical(ics_bytes)
 
 
 def test_render_markdown_list_with_and_without_labels() -> None:
@@ -145,16 +151,14 @@ def test_generate_cancelled_dates_with_simple_exdate(tmp_path: Path) -> None:
     skip_markdown_path = tmp_path / "content" / "de" / "homepage" / "skip.md"
     labels_path = tmp_path / "data" / "skip_labels.yml"
 
-    vevent_blocks = dedent(
-        """
+    vevent_blocks = dedent("""
         BEGIN:VEVENT
         UID:series-1
         DTSTAMP:20250101T000000Z
         DTSTART;VALUE=DATE:20990501
         EXDATE;VALUE=DATE:20990510
         END:VEVENT
-        """
-    ).strip()
+        """).strip()
 
     ics_bytes = _build_basic_calendar(vevent_blocks)
     ics_path.parent.mkdir(parents=True, exist_ok=True)
@@ -188,8 +192,7 @@ def test_generate_cancelled_dates_filters_replaced_cancelled_dates(
     skip_markdown_path = tmp_path / "content" / "de" / "homepage" / "skip.md"
     labels_path = tmp_path / "data" / "skip_labels.yml"
 
-    vevent_blocks = dedent(
-        """
+    vevent_blocks = dedent("""
         BEGIN:VEVENT
         UID:series-1
         DTSTAMP:20250101T000000Z
@@ -209,8 +212,7 @@ def test_generate_cancelled_dates_filters_replaced_cancelled_dates(
         RECURRENCE-ID;VALUE=DATE:20990520
         DTSTART;VALUE=DATE:20990520
         END:VEVENT
-        """
-    ).strip()
+        """).strip()
 
     ics_bytes = _build_basic_calendar(vevent_blocks)
     ics_path.parent.mkdir(parents=True, exist_ok=True)
@@ -233,3 +235,65 @@ def test_generate_cancelled_dates_filters_replaced_cancelled_dates(
     updated_skip = _read_file(skip_markdown_path)
     assert "10.05.2099" in updated_skip
     assert "20.05.2099" not in updated_skip
+
+
+def test_collect_effective_cancelled_dates_includes_exdates_and_cancelled_events() -> (
+    None
+):
+    # Arrange
+    vevent_blocks = dedent("""
+        BEGIN:VEVENT
+        UID:series-1
+        DTSTAMP:20250101T000000Z
+        DTSTART;VALUE=DATE:20250501
+        EXDATE;VALUE=DATE:20250510
+        END:VEVENT
+        BEGIN:VEVENT
+        UID:instance-cancelled
+        DTSTAMP:20250101T000000Z
+        STATUS:CANCELLED
+        RECURRENCE-ID;VALUE=DATE:20250520
+        DTSTART;VALUE=DATE:20250520
+        END:VEVENT
+        """).strip()
+    calendar = _build_calendar(vevent_blocks)
+
+    # Act
+    effective_dates = collect_effective_cancelled_dates(calendar)
+
+    # Assert
+    assert date(2025, 5, 10) in effective_dates
+    assert date(2025, 5, 20) in effective_dates
+
+
+def test_collect_effective_cancelled_dates_excludes_replaced_dates() -> None:
+    # Arrange
+    vevent_blocks = dedent("""
+        BEGIN:VEVENT
+        UID:series-1
+        DTSTAMP:20250101T000000Z
+        DTSTART;VALUE=DATE:20250501
+        EXDATE;VALUE=DATE:20250510
+        END:VEVENT
+        BEGIN:VEVENT
+        UID:instance-cancelled
+        DTSTAMP:20250101T000000Z
+        STATUS:CANCELLED
+        RECURRENCE-ID;VALUE=DATE:20250520
+        DTSTART;VALUE=DATE:20250520
+        END:VEVENT
+        BEGIN:VEVENT
+        UID:replacement-instance
+        DTSTAMP:20250101T000000Z
+        RECURRENCE-ID;VALUE=DATE:20250520
+        DTSTART;VALUE=DATE:20250520
+        END:VEVENT
+        """).strip()
+    calendar = _build_calendar(vevent_blocks)
+
+    # Act
+    effective_dates = collect_effective_cancelled_dates(calendar)
+
+    # Assert
+    assert date(2025, 5, 10) in effective_dates
+    assert date(2025, 5, 20) not in effective_dates

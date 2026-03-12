@@ -36,4 +36,5 @@ Thumbs.db
 # Lokale Umgebungsvariablen
 .env
 .env.*
+.envrc
 !.env.example
