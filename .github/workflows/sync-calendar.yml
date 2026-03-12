@@ -18,7 +18,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           token: ${{ secrets.CALENDAR_SYNC_PAT }}
@@ -55,7 +55,7 @@ jobs:
           mv "${temporary_ics_file_path}" static/Mittenwalde-spielt.ics
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.14"
 
