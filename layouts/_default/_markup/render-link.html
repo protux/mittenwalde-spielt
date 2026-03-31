@@ -1,0 +1,11 @@
+{{ $dest := urls.Parse .Destination }}
+{{ $base := urls.Parse site.BaseURL }}
+{{ $isExternal := and $dest.Host (ne $dest.Host $base.Host) }}
+
+<a href="{{ .Destination | safeURL }}"
+   {{ with .Title }} title="{{ . }}"{{ end }}
+   {{ if or $isExternal (strings.HasSuffix (lower .Destination) ".pdf") }}
+     target="_blank" rel="noopener noreferrer"
+   {{ end }}>
+  {{ .Text | safeHTML }}
+</a>
