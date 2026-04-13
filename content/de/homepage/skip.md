@@ -12,6 +12,7 @@ An folgenden Terminen findet voraussichtlich *kein* Spieleabend statt!
 Änderungen in der Liste sind jederzeit möglich, am Besten regelmäßig reinschauen. :)
 
 <!-- BEGIN GENERATED: cancelled-dates -->
+- 13.04.2026
 - 25.05.2026 (Pfingstmontag)
 - 28.12.2026 (der Raum steht nicht zur Verfügung)
 <!-- END GENERATED: cancelled-dates -->
