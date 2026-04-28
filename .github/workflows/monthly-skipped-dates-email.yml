@@ -1,12 +1,12 @@
-name: Send monthly skipped dates email
+name: Send quarterly skipped dates email
 
 on:
   schedule:
-    - cron: "0 6 1 * *"
+    - cron: "0 6 1 1,4,7,10 *"
   workflow_dispatch:
 
 jobs:
-  send-monthly-email:
+  send-quarterly-email:
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -34,7 +34,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r scripts/requirements.txt
 
-      - name: Send monthly skipped dates email
+      - name: Send quarterly skipped dates email
         run: |
           set -euo pipefail
           python -m scripts.send_email_with_skipped_dates

@@ -5,15 +5,12 @@ from pathlib import Path
 
 from textwrap import dedent
 
-from icalendar import Calendar
-
 from scripts.send_email_with_skipped_dates import (
-    MONTH_NAMES_GERMAN,
-    MonthlyCancelledDatesConfig,
+    QuarterlyCancelledDatesConfig,
     build_email_body,
     build_email_subject,
-    collect_cancelled_dates_for_month,
-    get_previous_month,
+    collect_cancelled_dates_for_quarter,
+    get_previous_quarter,
 )
 
 
@@ -31,35 +28,30 @@ def _build_basic_calendar(vevent_blocks: str) -> bytes:
     return calendar_text.encode("utf-8")
 
 
-def _build_calendar(vevent_blocks: str) -> Calendar:
-    ics_bytes = _build_basic_calendar(vevent_blocks)
-    return Calendar.from_ical(ics_bytes)
-
-
-def test_get_previous_month_wraps_year_boundary() -> None:
+def test_get_previous_quarter_wraps_year_boundary() -> None:
     # Arrange / Act
-    year, month = get_previous_month(date(2025, 1, 15))
+    year, quarter = get_previous_quarter(date(2025, 1, 15))
 
     # Assert
     assert year == 2024
-    assert month == 12
+    assert quarter == 4
 
 
-def test_get_previous_month_same_year() -> None:
+def test_get_previous_quarter_same_year() -> None:
     # Arrange / Act
-    year, month = get_previous_month(date(2025, 3, 1))
+    year, quarter = get_previous_quarter(date(2025, 5, 1))
 
     # Assert
     assert year == 2025
-    assert month == 2
+    assert quarter == 1
 
 
-def test_build_email_subject_uses_german_month_name() -> None:
+def test_build_email_subject_uses_quarter() -> None:
     # Arrange / Act
-    subject = build_email_subject(year=2025, month=3)
+    subject = build_email_subject(year=2025, quarter=3)
 
     # Assert
-    assert "März 2025" in subject
+    assert "Q3 2025" in subject
 
 
 def test_build_email_body_without_cancelled_dates() -> None:
@@ -71,11 +63,12 @@ def test_build_email_body_without_cancelled_dates() -> None:
     body = build_email_body(
         cancelled_dates=cancelled_dates,
         year=2025,
-        month=2,
+        quarter=1,
         sender_name=sender_name,
     )
 
     # Assert
+    assert "Quartal Q1 2025" in body
     assert "keine Termine der Spielegruppe ausgefallen" in body
     assert "Liebe Grüße," in body
     assert sender_name in body
@@ -90,11 +83,12 @@ def test_build_email_body_with_cancelled_dates() -> None:
     body = build_email_body(
         cancelled_dates=cancelled_dates,
         year=2025,
-        month=2,
+        quarter=1,
         sender_name=sender_name,
     )
 
     # Assert
+    assert "Quartal Q1 2025" in body
     assert "- 03.02.2025" in body
     assert "- 10.02.2025" in body
     assert "montäglichen Reservierung um 18 Uhr" in body
@@ -102,7 +96,7 @@ def test_build_email_body_with_cancelled_dates() -> None:
     assert sender_name in body
 
 
-def test_collect_cancelled_dates_for_month_filters_to_given_month(
+def test_collect_cancelled_dates_for_quarter_filters_to_given_quarter(
     tmp_path: Path,
 ) -> None:
     # Arrange
@@ -134,22 +128,31 @@ def test_collect_cancelled_dates_for_month_filters_to_given_month(
         DTSTART;VALUE=DATE:20250301
         EXDATE;VALUE=DATE:20250310
         END:VEVENT
+        BEGIN:VEVENT
+        UID:other-quarter
+        DTSTAMP:20250101T000000Z
+        DTSTART;VALUE=DATE:20250401
+        EXDATE;VALUE=DATE:20250407
+        END:VEVENT
         """).strip()
 
     ics_bytes = _build_basic_calendar(vevent_blocks)
     ics_path.parent.mkdir(parents=True, exist_ok=True)
     ics_path.write_bytes(ics_bytes)
 
-    config = MonthlyCancelledDatesConfig(ics_file_path=ics_path)
+    config = QuarterlyCancelledDatesConfig(ics_file_path=ics_path)
 
     # Act
-    cancelled_dates = collect_cancelled_dates_for_month(
+    cancelled_dates = collect_cancelled_dates_for_quarter(
         config=config,
         year=2025,
-        month=2,
+        quarter=1,
     )
 
     # Assert
     assert date(2025, 2, 10) in cancelled_dates
     assert date(2025, 2, 17) in cancelled_dates
-    assert all(cancelled_date.month == 2 for cancelled_date in cancelled_dates)
+    assert date(2025, 3, 10) in cancelled_dates
+    assert date(2025, 4, 7) not in cancelled_dates
+    assert all(cancelled_date.year == 2025 for cancelled_date in cancelled_dates)
+    assert all(1 <= cancelled_date.month <= 3 for cancelled_date in cancelled_dates)

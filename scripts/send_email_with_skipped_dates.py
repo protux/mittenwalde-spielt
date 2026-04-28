@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from datetime import date, datetime
 from email.message import EmailMessage
 from pathlib import Path
-from typing import Iterable, Sequence
+from typing import Sequence
 
 from icalendar import Calendar
 from zoneinfo import ZoneInfo
@@ -35,30 +35,34 @@ MONTH_NAMES_GERMAN: dict[int, str] = {
 
 
 @dataclass(frozen=True)
-class MonthlyCancelledDatesConfig:
+class QuarterlyCancelledDatesConfig:
     ics_file_path: Path
 
 
-def get_previous_month(reference_date: date) -> tuple[int, int]:
-    if reference_date.month == 1:
-        return reference_date.year - 1, 12
-    return reference_date.year, reference_date.month - 1
+def get_previous_quarter(reference_date: date) -> tuple[int, int]:
+    current_quarter = ((reference_date.month - 1) // 3) + 1
+    if current_quarter == 1:
+        return reference_date.year - 1, 4
+    return reference_date.year, current_quarter - 1
 
 
-def collect_cancelled_dates_for_month(
-    config: MonthlyCancelledDatesConfig,
+def collect_cancelled_dates_for_quarter(
+    config: QuarterlyCancelledDatesConfig,
     year: int,
-    month: int,
+    quarter: int,
 ) -> list[date]:
     calendar_bytes = config.ics_file_path.read_bytes()
     calendar = Calendar.from_ical(calendar_bytes)
 
     effective_cancelled_dates = collect_effective_cancelled_dates(calendar)
+    first_month_of_quarter = (quarter - 1) * 3 + 1
+    last_month_of_quarter = first_month_of_quarter + 2
 
     return [
         cancelled_date
         for cancelled_date in effective_cancelled_dates
-        if cancelled_date.year == year and cancelled_date.month == month
+        if cancelled_date.year == year
+        and first_month_of_quarter <= cancelled_date.month <= last_month_of_quarter
     ]
 
 
@@ -69,24 +73,21 @@ def _require_env(name: str) -> str:
     return value
 
 
-def build_email_subject(year: int, month: int) -> str:
-    month_name = MONTH_NAMES_GERMAN.get(month, str(month))
-    return f"Ausfalltermine Raummiete Brusendorf – {month_name} {year}"
+def build_email_subject(year: int, quarter: int) -> str:
+    return f"Ausfalltermine Raummiete Brusendorf – Q{quarter} {year}"
 
 
 def build_email_body(
     cancelled_dates: list[date],
     year: int,
-    month: int,
+    quarter: int,
     sender_name: str,
 ) -> str:
-    month_name = MONTH_NAMES_GERMAN.get(month, str(month))
-
     if not cancelled_dates:
         lines = [
             "Guten Tag,",
             "",
-            f"im {month_name} {year} sind keine Termine der Spielegruppe ausgefallen.",
+            f"im Quartal Q{quarter} {year} sind keine Termine der Spielegruppe ausgefallen.",
             "",
             "Liebe Grüße,",
             sender_name,
@@ -101,7 +102,7 @@ def build_email_body(
     lines = [
         "Guten Tag,",
         "",
-        f"im {month_name} {year} sind von unserer montäglichen Reservierung um 18 Uhr folgende Termine ausgefallen:",
+        f"im Quartal Q{quarter} {year} sind von unserer montäglichen Reservierung um 18 Uhr folgende Termine ausgefallen:",
         "",
     ]
 
@@ -159,18 +160,18 @@ def send_email(subject: str, body: str) -> None:
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Send monthly cancelled dates email for Spielegruppe."
+        description="Send quarterly cancelled dates email for Spielegruppe."
     )
     parser.add_argument(
         "--year",
         type=int,
-        help="Target year for the report (default: previous month based on Berlin time).",
+        help="Target year for the report (default: previous quarter based on Berlin time).",
     )
     parser.add_argument(
-        "--month",
+        "--quarter",
         type=int,
-        choices=range(1, 13),
-        help="Target month for the report (1-12, default: previous month based on Berlin time).",
+        choices=range(1, 5),
+        help="Target quarter for the report (1-4, default: previous quarter based on Berlin time).",
     )
     parser.add_argument(
         "--ics-file-path",
@@ -181,49 +182,51 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     return parser.parse_args(list(argv) if argv is not None else None)
 
 
-def determine_target_year_month(
+def determine_target_year_quarter(
     args: argparse.Namespace,
     timezone: ZoneInfo,
 ) -> tuple[int, int]:
-    if args.year and args.month:
-        return args.year, args.month
+    if (args.year is None) != (args.quarter is None):
+        raise ValueError("Provide --year and --quarter together, or provide neither.")
+    if args.year is not None and args.quarter is not None:
+        return args.year, args.quarter
 
     now_in_timezone = datetime.now(timezone).date()
-    return get_previous_month(now_in_timezone)
+    return get_previous_quarter(now_in_timezone)
 
 
 def main(argv: Sequence[str] | None = None) -> None:
     args = parse_args(argv)
 
-    target_year, target_month = determine_target_year_month(args, BERLIN_TIMEZONE)
+    target_year, target_quarter = determine_target_year_quarter(args, BERLIN_TIMEZONE)
 
-    config = MonthlyCancelledDatesConfig(
+    config = QuarterlyCancelledDatesConfig(
         ics_file_path=args.ics_file_path,
     )
 
-    cancelled_dates = collect_cancelled_dates_for_month(
+    cancelled_dates = collect_cancelled_dates_for_quarter(
         config=config,
         year=target_year,
-        month=target_month,
+        quarter=target_quarter,
     )
 
     sender_name = _require_env("REPORT_SENDER_NAME")
 
-    subject = build_email_subject(year=target_year, month=target_month)
+    subject = build_email_subject(year=target_year, quarter=target_quarter)
     body = build_email_body(
         cancelled_dates=cancelled_dates,
         year=target_year,
-        month=target_month,
+        quarter=target_quarter,
         sender_name=sender_name,
     )
 
     print(
-        f"Preparing to send monthly cancelled dates email for {target_month}/{target_year}."
+        f"Preparing to send quarterly cancelled dates email for Q{target_quarter}/{target_year}."
     )
 
     send_email(subject=subject, body=body)
 
-    print("Monthly cancelled dates email sent successfully.")
+    print("Quarterly cancelled dates email sent successfully.")
 
 
 if __name__ == "__main__":
