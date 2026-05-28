@@ -12,5 +12,5 @@ An folgenden Terminen findet voraussichtlich *kein* Spieleabend statt!
 Änderungen in der Liste sind jederzeit möglich, am Besten regelmäßig reinschauen. :)
 
 <!-- BEGIN GENERATED: cancelled-dates -->
-- 28.12.2026 (der Raum steht nicht zur Verfügung)
+Aktuell sind keine Ausfalltermine geplant! 🥳
 <!-- END GENERATED: cancelled-dates -->
