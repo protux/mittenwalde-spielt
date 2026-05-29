@@ -1,7 +1,7 @@
 ---
 title: "Announcement"
-draft: true
+draft: false
 announcement: true
 detailed_page_homepage_content: false
 ---
-Trotz der [ungeklärten Schlüssellage](#schlüsselsituation) sehen wir uns ab dem 09.03. wöchentlich.
+Neuer Raum und neuer Tag! Ab dem 04.06. treffen wir uns donnerstags in Ragow.

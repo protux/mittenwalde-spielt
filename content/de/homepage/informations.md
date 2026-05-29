@@ -3,8 +3,8 @@ title: "Informationen"
 weight: 20
 header_menu: true
 ---
-**Wo?** [Straße der Einheit 3, 15749 Mittenwalde OT Brusendorf](https://maps.app.goo.gl/fTJt3bQgbGjebwUN9)  
-**Wann?** jeden Montag, 18–21 Uhr  
+**Wo?** [Küstergasse 1 15749 Mittenwalde OT Ragow](https://maps.app.goo.gl/JtabowtdpNhhKAkx5) (in den Räumlichkeiten des Heimatverein Ragow)  
+**Wann?** jeden Donnerstag, 18–21 Uhr  
 **Was wird gespielt?** Alles, was mitgebracht wird!  
 **Wer ist eingeladen?** Alle – unabhängig von Alter, Geschlecht, Herkunft oder Sprachkenntnissen.  
 **Was kann ich mitbringen?**
@@ -13,4 +13,5 @@ header_menu: true
 - Wenn vorhanden: ein Spiel, das du mit uns spielen möchtest
 - alles was du brauchst, um dich wohlzufühlen: vielleicht Snacks und ein Getränk (Gläser und Leitungswasser sind vorhanden)
 
-**Kostet das was?** Der Raum kostet uns 4,80€ pro Stunde. Bei 3h Spielzeit sind das 14,40€. Wir möchten die Raummiete per freiwilligem Beitrag in selbstgewählter Höhe zusammenbringen. Wir rechnen den Raum quartalsweise ab, sodass wir nur die Termine bezahlen, an denen wir den Raum auch tatsächlich genutzt haben. 
+**Wo kann ich parken?** [Gerne in der Dorfstraße](https://maps.app.goo.gl/Wa2wW65sHfY9AmLF9), da sind viele freie Plätze. Bitte nicht auf dem Hof links, das ist Ausfahrt der Feuerwehr!  
+**Kostet das was?** Für Mitglieder des Heimatvereins kostet das nichts. Alle anderen werden gebeten 2€ pro Termin in die Spendendose des Heimatvereins zur Deckung der Raumkosten zu werfen.
