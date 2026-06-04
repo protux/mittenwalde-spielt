@@ -74,7 +74,7 @@ def _require_env(name: str) -> str:
 
 
 def build_email_subject(year: int, quarter: int) -> str:
-    return f"Ausfalltermine Raummiete Brusendorf – Q{quarter} {year}"
+    return f"Ausfalltermine Raummiete Ragow – Q{quarter} {year}"
 
 
 def build_email_body(
