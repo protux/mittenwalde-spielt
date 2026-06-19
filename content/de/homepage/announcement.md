@@ -1,6 +1,6 @@
 ---
 title: "Announcement"
-draft: false
+draft: true
 announcement: true
 detailed_page_homepage_content: false
 ---
