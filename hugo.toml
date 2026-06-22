@@ -28,7 +28,7 @@ defaultContentLanguage = "de"
     # Another "title" :-). This one is used as the site_name on the Hugo's internal
     # opengraph structured data template.
     # See https://ogp.me/ and https://gohugo.io/templates/internal#open-graph.
-    title = "Brettspielgruppe"
+    title = "🏳️‍🌈 Brettspielgruppe 🏳️‍🌈"
 
     # The "description" of your website. This is used in the meta data of your generated html.
     description = "Informationsseite der Mittenwalder Brettspielgruppe"
