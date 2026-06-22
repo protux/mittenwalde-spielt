@@ -6,7 +6,7 @@ header_menu: true
 **Wo?** [Küstergasse 1 15749 Mittenwalde OT Ragow](https://maps.app.goo.gl/JtabowtdpNhhKAkx5) (in den Räumlichkeiten des Heimatverein Ragow)  
 **Wann?** jeden Donnerstag, 18–21 Uhr  
 **Was wird gespielt?** Alles, was mitgebracht wird!  
-**Wer ist eingeladen?** Alle – unabhängig von Alter, Geschlecht, Herkunft oder Sprachkenntnissen.  
+**Wer ist eingeladen?** Alle – unabhängig von Alter, Geschlecht, Herkunft oder Sprachkenntnissen. 🏳️‍🌈  
 **Was kann ich mitbringen?**
 - Gute Laune
 - Spaß am Spielen
