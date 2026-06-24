@@ -14,4 +14,4 @@ header_menu: true
 - alles was du brauchst, um dich wohlzufühlen: vielleicht Snacks und ein Getränk (Gläser und Leitungswasser sind vorhanden)
 
 **Wo kann ich parken?** 🅿️ [Gerne in der Dorfstraße](https://maps.app.goo.gl/Wa2wW65sHfY9AmLF9), da sind viele freie Plätze. Bitte nicht auf dem Hof, das ist Ausfahrt der Feuerwehr!  
-**Kostet das was?** Für Mitglieder des Heimatvereins kostet das nichts. Alle anderen werden gebeten 2€ pro Termin in die Spendendose des Heimatvereins zur Deckung der Raumkosten zu werfen.
+**Kostet das was?** Für Mitglieder des Heimatvereins kostet das nichts. Alle anderen werden gebeten einen kleinen Beitrag in selbstgewählter Höhe pro Termin in die Spendendose des Heimatvereins zur Deckung der Raumkosten zu werfen.
