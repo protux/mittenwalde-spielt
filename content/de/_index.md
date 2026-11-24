@@ -6,7 +6,7 @@ header_image: "images/header_feed_the_kraken_xmas.png"
 header_use_video: false
 #
 # Optional header logo. CSS: `#blog-logo`, with max-height defined, optimize to prevent scaling
-header_logo: "images/mascot_header.png"
+header_logo: "images/mascot_header_xmas.png"
 #
 # Headers are safeHTML, you can use HTML tags such as b,i,u,br
 header_headline: "Mittenwalde spielt!"
