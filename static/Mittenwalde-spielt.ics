@@ -70,8 +70,10 @@ DESCRIPTION:In den Räumlichkeiten des Heimatvereins Ragow.\n\nAlle aktuell
  en Informationen und kurzfristigen Ankündigungen zum Nachlesen und Teilen
   findest du unter https://mittenwalde-spielt.de/\n\nWir freuen uns auf dic
  h!
-DTSTAMP:20260528T055855Z
-LAST-MODIFIED:20260528T055855Z
+DTSTAMP:20261124T170006Z
+EXDATE;TZID=Europe/Berlin:20261224T180000
+EXDATE;TZID=Europe/Berlin:20261231T180000
+LAST-MODIFIED:20261124T170006Z
 LOCATION:Küstergasse 1\nRagow\, Mittenwalde\, Deutschland
 RRULE:FREQ=WEEKLY
 SEQUENCE:1

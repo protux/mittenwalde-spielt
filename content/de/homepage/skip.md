@@ -12,5 +12,6 @@ An folgenden Terminen findet voraussichtlich *kein* Spieleabend statt!
 Änderungen in der Liste sind jederzeit möglich, am Besten regelmäßig reinschauen. :)
 
 <!-- BEGIN GENERATED: cancelled-dates -->
-Aktuell sind keine Ausfalltermine geplant! 🥳
+- 24.12.2026 (🔔️🎄️🔔️)
+- 31.12.2026 (🎉️🥂)
 <!-- END GENERATED: cancelled-dates -->
